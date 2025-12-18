@@ -200,4 +200,4 @@ python scripts/download_video.py --input-json "{\"task_id\":\"sora-2:task_xxx\",
 - `references/api_documentation.md`：上游 API 速览（脚本实现最小参考）
 - `references/policy.md`：合规与安全提示（对用户展示口径）
 - `references/tuzi-sora2-claude-skill-complete.md`：完整整合方案（大文档，含附录与源文档收录）
-- `docs/tuzi-sora2-claude-skill-complete.md`：同上（保留一份在 docs 便于追溯）
+> 说明：本仓库默认忽略 `docs/`（本地草稿/敏感信息可放此处，但不会提交到 GitHub）。
