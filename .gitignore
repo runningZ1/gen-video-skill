@@ -1,5 +1,9 @@
 .env
 docs/
 downloads/         # 旧的输出目录(已弃用,现在输出到 assets/)
+temp/              # 临时JSON配置文件
 __pycache__/
 *.pyc
+*.mp4              # 生成的视频文件
+*.jpg              # 图片文件
+*.png              # 图片文件

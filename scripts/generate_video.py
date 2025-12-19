@@ -1,7 +1,10 @@
 from __future__ import annotations
 
+import json
 import sys
 import time
+from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 from _shared import SkillError, build_arg_parser, load_input_payload, print_error, print_ok
@@ -41,6 +44,9 @@ def main() -> int:
                     details={"upstream": task},
                 )
 
+            # 保存输入配置到temp目录
+            _save_input_config(payload, task_id)
+
             if wait_for_completion:
                 poll_start_time = time.time()
                 task = client.poll_until_terminal(task_id=task_id)
@@ -78,6 +84,36 @@ def main() -> int:
     except Exception as exc:
         print_error(SkillError(code="unexpected_error", message="Unexpected error", details={"error": str(exc)}))
         return 3
+
+
+def _save_input_config(payload: dict[str, Any], task_id: str) -> None:
+    """将输入配置保存到temp目录,文件名包含时间戳"""
+    try:
+        # 获取脚本所在目录的父目录（项目根目录）
+        script_dir = Path(__file__).parent
+        project_root = script_dir.parent
+        temp_dir = project_root / "temp"
+
+        # 确保temp目录存在
+        temp_dir.mkdir(exist_ok=True)
+
+        # 生成文件名：input_YYYYMMDD_HHMMSS.json
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        filename = f"input_{timestamp}.json"
+        filepath = temp_dir / filename
+
+        # 保存配置（包含task_id信息）
+        config_to_save = {
+            "task_id": task_id,
+            "created_at": datetime.now().isoformat(),
+            "input": payload
+        }
+
+        with open(filepath, "w", encoding="utf-8") as f:
+            json.dump(config_to_save, f, ensure_ascii=False, indent=2)
+    except Exception:
+        # 保存失败不影响主流程，静默忽略
+        pass
 
 
 def _format_duration(seconds: float) -> str:
