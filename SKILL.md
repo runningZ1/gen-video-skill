@@ -191,7 +191,7 @@ python scripts/download_video.py --input-json "{\"task_id\":\"sora-2:task_xxx\",
 
 - `task_id` (string, required)
 - `mode` (string, optional)：`url` | `bytes` | `file`，默认 `url`
-- `output_path` (string, optional)：`mode=file` 时写入路径（可选）
+- `output_path` (string, optional)：`mode=file` 时写入路径。如不指定，默认保存到 `assets/` 目录，文件名根据 task_id 自动生成
 
 ---
 

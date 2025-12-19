@@ -22,7 +22,9 @@ def _pick(d: dict[str, Any], *keys: str) -> Any:
 
 def _default_output_path(task_id: str) -> Path:
     safe = SAFE_NAME_RE.sub("_", task_id).strip("._-") or "video"
-    return Path("downloads") / f"{safe}.mp4"
+    # 默认输出到 assets 目录
+    skill_root = Path(__file__).parent.parent
+    return skill_root / "assets" / f"{safe}.mp4"
 
 
 def main() -> int:

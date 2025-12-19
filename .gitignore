@@ -1,5 +1,5 @@
 .env
 docs/
-downloads/
+downloads/         # 旧的输出目录(已弃用,现在输出到 assets/)
 __pycache__/
 *.pyc
